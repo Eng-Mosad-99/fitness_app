@@ -23,7 +23,7 @@ class HealthFitness extends StatelessWidget {
               body: Container(
                 decoration:  BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(AppImages.noNetwork),
+                    image: AssetImage(AppImages.noNetworkImage),
                     fit: BoxFit.fill,
                   ),
                 ),
