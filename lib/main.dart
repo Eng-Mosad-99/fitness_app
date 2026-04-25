@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:health_fitness/core/helper/connectivity_helper.dart';
 
 void main() {
   runApp(const HealthFitness());
@@ -10,24 +11,54 @@ class HealthFitness extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(430, 879),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Health & Fitness',
-          home: Scaffold(
-            body: Center(
-              child: Text(
-                'Welcome to Health & Fitness App',
-                style: TextStyle(fontSize: 24.sp),
+    return ValueListenableBuilder(
+      valueListenable: ConnectivityHelper.instance.isConnected,
+      builder: (_, value, _) {
+        if (!value) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Health & Fitness',
+            home: Scaffold(
+              body: Center(
+                child: Text(
+                  'No Internet Connection',
+                  style: TextStyle(fontSize: 24.sp, color: Colors.red),
+                ),
               ),
             ),
-          ),
-        );
-        },
+          );
+        } else {
+          return ScreenUtilInit(
+            designSize: const Size(430, 879),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Health & Fitness',
+                home: Scaffold(
+                  body: Center(
+                    child: Text(
+                      'Welcome to Health & Fitness App',
+                      style: TextStyle(fontSize: 24.sp),
+                    ),
+                  ),
+                ),
+                builder: (context, child) {
+                 return Scaffold(
+                  body: Builder(
+                    builder: (context) {
+                      ConnectivityHelper.instance.init();
+                      return child!;
+                    }
+                  ),
+                 );
+                },
+              );
+            },
+          );
+        }
+      },
     );
   }
 }
