@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:health_fitness/core/helper/connectivity_helper.dart';
+import 'package:health_fitness/core/utils/assets_manager.dart';
 
 void main() {
   runApp(const HealthFitness());
@@ -19,10 +20,12 @@ class HealthFitness extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Health & Fitness',
             home: Scaffold(
-              body: Center(
-                child: Text(
-                  'No Internet Connection',
-                  style: TextStyle(fontSize: 24.sp, color: Colors.red),
+              body: Container(
+                decoration:  BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.noNetwork),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
